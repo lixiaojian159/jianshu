@@ -18,7 +18,13 @@
     </div>
     <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} by <a href="#">{{$post->user->name}}</a></p>
     <p><p>{!!$post->content!!}</p><p><br></p></p>
-    <div><a href="/posts/62/zan" type="button" class="btn btn-primary btn-lg">赞</a></div>
+    <div>
+        @if( $post->zan(Auth::id())->exists() )
+        <a href='{{url("/posts/$post->id/zan")}}' type="button" class="btn btn-primary btn-lg">赞</a>
+        @else
+        <a href='{{url("/posts/$post->id/quzan")}}' type="button" class="btn btn-primary btn-lg">取消赞</a>
+        @endif
+    </div>
 </div>
 
 <div class="panel panel-default">

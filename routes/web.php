@@ -48,9 +48,14 @@ Route::get('/posts/{id}/delete','PostController@delete');
 Route::post('/posts/image/upload','PostController@imageUpload');
 //添加评论逻辑
 Route::post('/posts/{post}/comment','PostController@comment');
+//赞的逻辑
+Route::get('/posts/{id}/zan','PostController@zan');
+//取消赞的逻辑
+Route::get('/posts/{id}/quzan','PostController@quzan');
 
 //测试
 Route::get('/test','PostController@test');
 //测试容器类
 Route::get('/test/app','TestController@test_app');
 Route::get('/test/auth','TestController@test_auth');
+Route::get('/test/{id}/basic','PostController@basic');

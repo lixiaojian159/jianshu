@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use App\Post;
 use App\User;
 use App\Comment;
+use App\Zan;
 use Auth;
 
 class PostController extends Controller
@@ -22,7 +23,7 @@ class PostController extends Controller
 
     //文章列表
     public function index(){
-        $posts = Post::with('user')->withCount('comments')->orderBy('created_at','desc')->paginate(10);
+        $posts = Post::with('user')->withCount(['comments','zans'])->orderBy('created_at','desc')->paginate(10);
     	return view('posts.index',compact('posts'));
     }
 
@@ -127,6 +128,33 @@ class PostController extends Controller
         $post->comments()->save($comment);
 
         return redirect()->back();
+    }
+
+    //赞的逻辑
+    public function zan($id){
+
+        $data['post_id'] = $id;
+        $data['user_id'] = Auth::id(); 
+        Zan::firstOrCreate($data);
+        return redirect()->back();
+    }
+
+    //取消赞的逻辑
+    public function quzan($id){
+        //方法一： 自己
+        // $post = Post::find($id);
+        // $user_id = Auth::id();
+        // $res  = $post->is_zan($user_id);
+        // if(count($res) != 0){
+        //     foreach($res as $r){
+        //         $r->delete();
+        //         return redirect()->back();
+        //     }
+        // }
+        // 方法二：慕课老师
+        $post = Post::find($id);
+        $post->zan(\Auth::id())->delete();
+        return back();
     }
 
 }

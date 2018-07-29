@@ -19,6 +19,8 @@
 |
 */
 
+header("Content-Security-Policy: upgrade-insecure-requests");
+
 require __DIR__.'/../bootstrap/autoload.php';
 
 /*
