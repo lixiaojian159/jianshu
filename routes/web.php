@@ -52,6 +52,12 @@ Route::post('/posts/{post}/comment','PostController@comment');
 Route::get('/posts/{id}/zan','PostController@zan');
 //取消赞的逻辑
 Route::get('/posts/{id}/quzan','PostController@quzan');
+//个人中心主页
+Route::get('/user/{user}','UserController@show');
+//关注的逻辑
+Route::post('/user/{user}/fan','UserController@fan');
+//取消关注
+Route::post('/user/{user}/doUnFan','UserController@doUnFan');
 
 //测试
 Route::get('/test','PostController@test');
